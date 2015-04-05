@@ -1,0 +1,15 @@
+<% for(var i=0; i<item.length; i++) { %>
+
+	<h2><%= item[i].cname %></h2>
+	<p><a href="<%= item[i].edes %>" target="_balnk">GitHub</a></p>
+	
+	<br>
+
+	<h3>URL</h3>
+	<ul>
+		<% for(var j=0; j<item[i].demo.length; j++) { %>
+			<li><a href="<%= item[i].demo[j].url %>" target="_blank"><%= item[i].demo[j].name %></a></li>
+		<% } %>
+	</ul>
+
+<% } %>

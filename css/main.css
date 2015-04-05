@@ -1,0 +1,30 @@
+*{
+	margin: 0;
+	padding: 0;
+	font-family: Open Sans, Microsoft JhengHei, Arial, serif;
+}
+html,body{
+	height: 100%;
+}
+h1{
+	margin: 10px;
+}
+.nav{
+	background-color: #A19292;
+	margin: 10px 0; 
+} 
+.nav>a{
+	color: #FFF;
+}
+.nav>a>.item{
+	display: inline-block;
+	padding: 10px;
+}
+.nav>a>.item:hover{
+	background-color: #6E6666;
+	cursor: pointer;
+}
+
+.page{
+	padding: 3%;
+}
