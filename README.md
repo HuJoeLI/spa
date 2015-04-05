@@ -8,4 +8,8 @@
 ## 後端
 純粹只造 API 。因此換頁也只是 Data 切換
 
+這個例子使用靜態的 JSON 資料代替
+
+## REST 
+使用 apache URL rewrite 來達到 Restful 的 URL 效果
 
