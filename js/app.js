@@ -1,11 +1,13 @@
 $(function(){
 
 	// 初始化 載入初始畫面
-	var state = {
-			title: i3s_page,
-    		url: "./"+i3s_page
-	}
-	load_page(state);
+
+	ajax(i3s_page,function(data){
+		document.title = i3s_page;
+		renderPage(i3s_page,data);
+	});
+
+
 
 	// 攔截 URL 事件
 	// 部分更新畫面
@@ -27,6 +29,11 @@ $(function(){
 	   		document.title = state.title;
 	   		renderPage(state.title,data);
 	  	});
+	  }else if(history.state===null){
+		ajax(i3s_page,function(data){
+			document.title = i3s_page;
+			renderPage(i3s_page,data);
+		});
 	  }
 	}, false);
 
