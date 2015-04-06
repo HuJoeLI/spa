@@ -3,11 +3,8 @@ $(function(){
 	// 初始化 載入初始畫面
 
 	ajax(i3s_page,function(data){
-		document.title = i3s_page;
 		renderPage(i3s_page,data);
 	});
-
-
 
 	// 攔截 URL 事件
 	// 部分更新畫面
@@ -16,7 +13,10 @@ $(function(){
 			title: $(this).data('item'),
     		url: $(this).attr('href')
 		}
-		load_page(state);
+		ajax(state.title,function(data){
+			window.history.pushState(state, document.title, state.url);
+			renderPage(state.title,data);
+		});
 		return false;
 	});
 
@@ -26,26 +26,15 @@ $(function(){
 	  if (history.state){
 	  	var state = e.state;
 	  	ajax(state.title,function(data){
-	   		document.title = state.title;
 	   		renderPage(state.title,data);
 	  	});
 	  }else if(history.state===null){
 		ajax(i3s_page,function(data){
-			document.title = i3s_page;
 			renderPage(i3s_page,data);
 		});
 	  }
 	}, false);
 
-	
-// 部分更新區域 (換頁)
-function load_page(state){
-	ajax(state.title,function(data){
-		document.title = state.title;
-		window.history.pushState(state, document.title, state.url);
-		renderPage(state.title,data);
-	});
-}
 
 // 取 JSON 資料 (JSON名=URL名)
 function ajax(page,callback){
@@ -53,9 +42,8 @@ function ajax(page,callback){
 		url: '/spa/data/'+page+'.json',
 		dataType: 'json'
 	})
-	.done(function(data) {
-		callback(data);
-	});	
+	.done(function(data) { callback(data); })
+	.fail(function(){ callback({item:[],error:'404'}); });	
 }
 
 // EJS 渲染
@@ -75,16 +63,18 @@ function render(set){
 // 畫面控制器 (選染EJS)
 function renderPage(page,data){
 	// 控制器定義畫面種類
-	var arr_p = ['Home','About','Demo','Other','404'];
+	var arr_p = ['Home','About','Demo','Other'];
 	// 是這些控制器中的畫面
-	// 才渲染
-	if($.inArray(page,arr_p)>=0){
-		render({
-			ejs:page,
-			target:'page',
-			data:data
-		});
-	}
+	// 才渲染，否則一律渲染 404 畫面
+	if($.inArray(page,arr_p)<0) page = '404';
+
+	document.title = page;
+
+	render({
+		ejs:page,
+		target:'page',
+		data:data
+	});
 }
 	
 });

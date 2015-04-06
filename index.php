@@ -1,4 +1,4 @@
-<?php $page = $_GET['page']==""?'Home':$_GET['page']; ?>
+<?php $page = isset($_GET['page'])?$_GET['page']:'Home'; ?>
 <!DOCTYPE html>
 <html>
 <head>
